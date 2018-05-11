@@ -34,7 +34,7 @@ var server = net.createServer(function (peerSocket) {
     if (!serviceSocket && message.indexOf("POST /") >= 0) {
       serviceSocket = peerSocket;
       serviceSocket.write(
-'HTTP/1.0 200 OK\r\n\
+'HTTP/1.1 200 OK\r\n\
 Content-Type: text/html; charset=UTF-8\r\n\
 Connection: keep-alive\r\n\
 Content-Length: 0\r\n\r\n');
