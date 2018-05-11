@@ -1,5 +1,5 @@
 //  OpenShift sample Node application
-var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8081,
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
   ip = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 var serviceSocket = null;
 var p2s = {};
