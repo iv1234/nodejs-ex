@@ -30,6 +30,7 @@ var server = net.createServer(function (peerSocket) {
     clear(peerSocket);
   });
   peerSocket.on('data', function (message) {
+console.log(message);
     if (!serviceSocket && message.indexOf("POST /") >= 0) {
       serviceSocket = peerSocket;
       serviceSocket.on('data', function (data) {
