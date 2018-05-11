@@ -1,5 +1,5 @@
 //  OpenShift sample Node application
-var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8081,
   ip = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 var serviceSocket = null;
 var p2s = {};
@@ -30,9 +30,14 @@ var server = net.createServer(function (peerSocket) {
     clear(peerSocket);
   });
   peerSocket.on('data', function (message) {
-console.log(message.toString());
+    console.log(message.toString());
     if (!serviceSocket && message.indexOf("POST /") >= 0) {
       serviceSocket = peerSocket;
+      serviceSocket.write(
+'HTTP/1.0 200 OK\r\n\
+Content-Type: text/html; charset=UTF-8\r\n\
+Connection: keep-alive\r\n\
+Content-Length: 0\r\n\r\n');
       serviceSocket.on('data', function (data) {
         if (data.toString().substring(2) == "end") {
           p2s[data.toString().substring(0, 2)].end();
@@ -53,4 +58,4 @@ console.log(message.toString());
   });
 });
 server.listen(port, ip);
-console.log('Server accepting connection on port: '+ip+':'+port);
+console.log('Server accepting connection on port: ' +ip+':'+port);
